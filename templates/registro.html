@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Registro de Usuario</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="static/global.css">
     <script defer src="static/app.js"></script>
 </head>
 <body>
     <div class="login-container">
-        <form class="login-form" action="#">
-            <h2>Iniciar Sesión</h2>
+        <form class="registro-form" action="#">
+            <h2>Registro de Usuario</h2>
 
             <div id="flash-messages"></div>
 
             <div class="form-group">
                 <i class="fas fa-user icon"></i>
-                <input type="text" name="usuario" placeholder="Usuario" required>
+                <input type="text" name="usuario" placeholder="Nombre de Usuario" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" name="email" placeholder="Correo Electrónico" required>
             </div>
 
             <div class="form-group password-group">
@@ -26,11 +31,10 @@
                 <i class="toggle-password fas fa-eye"></i>
             </div>
 
-            <button type="submit" class="btn">Iniciar Sesión</button>
+            <button type="submit" class="btn">Registrarse</button>
 
-            <p><a href="recuperar_contrasena.html">¿Olvidaste tu contraseña?</a></p>
-            <div class="signup-link">
-                <p>¿No tienes cuenta? <a href="registro.html">¡Crea una ahora aquí!</a></p>
+            <div class="login-link">
+                <p>¿Ya tienes cuenta? <a href="login.html">¡Inicia sesión aquí!</a></p>
             </div>
         </form>
     </div>

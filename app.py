@@ -4,38 +4,41 @@ from pymongo import MongoClient
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from itsdangerous import URLSafeTimedSerializer as Serializer
+import os
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-# Clave secreta para sesiones
-app.secret_key = "advpjsh"
+# Clave secreta segura generada aleatoriamente
+app.secret_key = os.urandom(24).hex()
 
 # Configuración de MongoDB Atlas
 client = MongoClient("tu enlace de base de datos aquí")
-db = client['db2'] #Nombre de tu base de datos aquí
-collection = db['usuarios'] #Nombre de tu colección aquí
+db = client['db2']  # Nombre de tu base de datos
+collection = db['usuarios']  # Nombre de tu colección
 
 # Configuración de SendGrid
-SENDGRID_API_KEY = 'enlace de la API de SendGrid aquí' 
+SENDGRID_API_KEY = 'enlace de la API de SendGrid aquí'
 
-# Serializador para crear y verificar tokens
+# Serializador para tokens
 serializer = Serializer(app.secret_key, salt='password-reset-salt')
 
 # Función para enviar correos
 def enviar_email(destinatario, asunto, cuerpo):
     mensaje = Mail(
-        from_email='tu correo remitente que creaste en SendGrid aquí',  # Cambia esto por tu correo
+        from_email='tu correo remitente aquí',
         to_emails=destinatario,
         subject=asunto,
         html_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)  # Usa tu clave API de SendGrid directamente
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
         response = sg.send(mensaje)
         print(f"Correo enviado con éxito! Status code: {response.status_code}")
+        return True
     except Exception as e:
         print(f"Error al enviar el correo: {e}")
+        return False
 
 @app.route('/')
 def home():
@@ -50,25 +53,21 @@ def registro():
         email = request.form['email']
         contrasena = request.form['contrasena']
 
-        # Verificar si el correo ya está registrado
         if collection.find_one({'email': email}):
-            flash("El correo electrónico ya está registrado.")
+            flash("El correo electrónico ya está registrado.", "error")
             return redirect(url_for('registro'))
 
-        # Hashear la contraseña
         hashed_password = bcrypt.generate_password_hash(contrasena).decode('utf-8')
-
-        # Insertar usuario en la base de datos
         collection.insert_one({
             'usuario': usuario,
             'email': email,
             'contrasena': hashed_password
         })
-        
         session['usuario'] = usuario
+        flash("Registro exitoso. ¡Bienvenido!", "success")
         return redirect(url_for('pagina_principal'))
 
-    return render_template('register.html')
+    return render_template('registro.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -76,16 +75,13 @@ def login():
         usuario = request.form['usuario']
         contrasena = request.form['contrasena']
 
-        # Buscar al usuario en la base de datos
         user = collection.find_one({'usuario': usuario})
-        
-        # Verificar si las credenciales son correctas
         if user and bcrypt.check_password_hash(user['contrasena'], contrasena):
             session['usuario'] = usuario
+            flash("Inicio de sesión exitoso.", "success")
             return redirect(url_for('pagina_principal'))
         else:
-            flash("Usuario o contraseña incorrectos.")
-            return render_template('login.html')
+            flash("Usuario o contraseña incorrectos.", "error")
 
     return render_template('login.html')
 
@@ -99,7 +95,6 @@ def pagina_principal():
 def mi_perfil():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-    
     usuario = session['usuario']
     user_data = collection.find_one({'usuario': usuario})
     return render_template('mi_perfil.html', usuario=user_data['usuario'], email=user_data['email'])
@@ -120,8 +115,10 @@ def recuperar_contrasena():
             <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
             <a href="{enlace}">Restablecer contraseña</a>
             """
-            enviar_email(email, asunto, cuerpo)
-            flash("Te hemos enviado un correo para recuperar tu contraseña.", "success")
+            if enviar_email(email, asunto, cuerpo):
+                flash("Te hemos enviado un correo para recuperar tu contraseña.", "success")
+            else:
+                flash("Error al enviar el correo. Intenta de nuevo.", "error")
         else:
             flash("El correo electrónico no está registrado.", "error")
 
@@ -147,7 +144,8 @@ def restablecer_contrasena(token):
 @app.route('/logout')
 def logout():
     session.pop('usuario', None)
+    flash("Has cerrado sesión.", "success")
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True)
