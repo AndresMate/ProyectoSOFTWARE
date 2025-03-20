@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
             msg.className = category;
             msg.textContent = message;
             flashContainer.appendChild(msg);
-            setTimeout(() => msg.remove(), 3000); // Eliminar después de 3 segundos
+            setTimeout(() => msg.remove(), 3000);
         }
     }
 
@@ -29,7 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.querySelector('.hamburger');
     const mobileMenu = document.querySelector('.mobile-menu');
     if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active'); // Usamos 'active' en lugar de 'hidden'
+        });
     }
 
     // Verificar sesión

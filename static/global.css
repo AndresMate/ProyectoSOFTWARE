@@ -4,21 +4,22 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container, .login-container, .profile-container {
     background: #fff;
-    padding: 20px 30px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #000;
-    max-width: 450px;
-    margin: 50px auto;
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto;
     text-align: center;
+    box-sizing: border-box;
 }
 
 h1, h2 {
@@ -29,7 +30,7 @@ h1, h2 {
 
 .form-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     width: 100%;
 }
 
@@ -39,19 +40,21 @@ h1, h2 {
     top: 50%;
     transform: translateY(-50%);
     color: #000;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 14px 14px 14px 45px;
+    max-width: 100%;
+    padding: 10px 10px 10px 40px;
     border: 2px solid rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.05);
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -65,12 +68,12 @@ h1, h2 {
 
 .btn, button {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     background: linear-gradient(45deg, #D3D3D3, #BEBEBE);
     color: #000;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -85,7 +88,7 @@ h1, h2 {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 18px;
     color: #000;
     cursor: pointer;
 }
@@ -96,7 +99,7 @@ h1, h2 {
     border: 1px solid #c3e6cb;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 #flash-messages .error {
@@ -105,7 +108,7 @@ h1, h2 {
     border: 1px solid #ff9999;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 a {
@@ -114,4 +117,45 @@ a {
 }
 a:hover {
     color: #555;
+}
+
+@media (max-width: 768px) {
+    .container, .login-container, .profile-container {
+        max-width: 90%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    h1, h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-group input {
+        font-size: 12px;
+        padding: 8px 8px 8px 35px;
+    }
+
+    .btn, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .toggle-password {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group .icon {
+        font-size: 16px;
+    }
+
+    .form-group input {
+        padding: 6px 6px 6px 30px;
+    }
+
+    .btn, button {
+        font-size: 12px;
+        padding: 8px;
+    }
 }
