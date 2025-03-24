@@ -1,7 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #D3D3D3;
-    color: #333;
+    background-color: #F4F6FF;
+    color: #10375C;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -10,11 +10,11 @@ body {
 }
 
 .container, .login-container, .profile-container {
-    background: #fff;
+    background: #FFFFFF;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #000;
+    border: 1px solid #10375C;
     max-width: 400px;
     width: 100%;
     margin: 20px auto;
@@ -25,7 +25,7 @@ body {
 h1, h2 {
     font-size: 1.5rem;
     margin-bottom: 20px;
-    color: #333;
+    color: #10375C;
 }
 
 .form-group {
@@ -39,7 +39,7 @@ h1, h2 {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #000;
+    color: #10375C;
     font-size: 18px;
 }
 
@@ -47,10 +47,10 @@ h1, h2 {
     width: 100%;
     max-width: 100%;
     padding: 10px 10px 10px 40px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    border: 2px solid #10375C;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #000;
+    background-color: #F4F6FF;
+    color: #10375C;
     font-size: 14px;
     outline: none;
     transition: all 0.3s ease;
@@ -58,12 +58,13 @@ h1, h2 {
 }
 
 .form-group input:focus {
-    border-color: #000;
-    background-color: rgba(0, 0, 0, 0.1);
+    border-color: #F3C623;
+    background-color: #FFFFFF;
 }
 
 .form-group input::placeholder {
-    color: #666;
+    color: #10375C;
+    opacity: 0.6;
 }
 
 .btn, button {
@@ -71,16 +72,16 @@ h1, h2 {
     padding: 12px;
     border: none;
     border-radius: 8px;
-    background: linear-gradient(45deg, #D3D3D3, #BEBEBE);
-    color: #000;
+    background: #F3C623;
+    color: #10375C;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn:hover, button:hover {
-    background: linear-gradient(45deg, #BEBEBE, #D3D3D3);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: #EB8317;
+    color: #FFFFFF;
 }
 
 .toggle-password {
@@ -89,7 +90,7 @@ h1, h2 {
     top: 50%;
     transform: translateY(-50%);
     font-size: 18px;
-    color: #000;
+    color: #10375C;
     cursor: pointer;
 }
 
@@ -112,11 +113,29 @@ h1, h2 {
 }
 
 a {
-    color: #333;
+    color: #10375C;
     text-decoration: none;
 }
 a:hover {
-    color: #555;
+    color: #EB8317;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #10375C;
+    color: #F4F6FF;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo {
+    max-height: 50px; /* Ajustado para un tamaño más adecuado */
+    filter: brightness(0) invert(1); /* Ajusta el logotipo para que sea blanco en fondo oscuro */
 }
 
 @media (max-width: 768px) {
@@ -143,6 +162,15 @@ a:hover {
     .toggle-password {
         font-size: 16px;
     }
+
+    footer {
+        font-size: 10px;
+        padding: 15px;
+    }
+
+    .footer-logo {
+        max-height: 40px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -157,5 +185,9 @@ a:hover {
     .btn, button {
         font-size: 12px;
         padding: 8px;
+    }
+
+    .footer-logo {
+        max-height: 30px;
     }
 }

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #000;
+    background-color: #10375C;
     padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -10,9 +10,19 @@
     z-index: 1000;
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand .logo {
+    max-height: 40px;
+}
+
 .navbar-brand h1 {
     font-size: 24px;
-    color: #fff;
+    color: #F4F6FF;
     margin: 0;
 }
 
@@ -25,47 +35,56 @@
 }
 
 .navbar-menu a {
-    color: #fff;
+    color: #F4F6FF;
     font-size: 16px;
     transition: color 0.3s ease-in-out;
 }
 
 .navbar-menu a:hover {
-    color: #D3D3D3;
+    color: #F3C623;
+}
+
+.dropdown {
+    position: relative; /* Necesario para que el dropdown-content se posicione respecto a este elemento */
 }
 
 .dropdown .dropbtn {
-    background-color: #333;
-    color: #fff;
+    background-color: #F3C623;
+    color: #10375C;
     padding: 10px;
     border-radius: 50%;
     width: 36px;
     height: 36px;
     text-align: center;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #444;
+    top: 100%; /* Se posiciona justo debajo del botón */
+    right: 0; /* Alineado a la derecha del botón */
+    background-color: #10375C;
     min-width: 180px;
-    left: 50%;
-    transform: translateX(-50%);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding: 8px 0;
+    z-index: 1000;
 }
 
 .dropdown-content a {
-    color: #fff;
+    color: #F4F6FF;
     padding: 8px 16px;
     display: block;
     font-size: 14px;
 }
 
 .dropdown-content a:hover {
-    background-color: #555;
+    background-color: #F3C623;
+    color: #10375C;
 }
 
 .dropdown:hover .dropdown-content {
@@ -86,7 +105,7 @@
 .hamburger span {
     width: 100%;
     height: 3px;
-    background-color: #fff;
+    background-color: #F4F6FF;
     border-radius: 3px;
 }
 
@@ -96,7 +115,7 @@
     position: absolute;
     top: 60px;
     right: 10px;
-    background-color: #333;
+    background-color: #10375C;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -107,13 +126,14 @@
 }
 
 .mobile-menu a {
-    color: #fff;
+    color: #F4F6FF;
     padding: 8px;
     font-size: 14px;
 }
 
 .mobile-menu a:hover {
-    background-color: #444;
+    background-color: #F3C623;
+    color: #10375C;
 }
 
 .main-container {
@@ -121,11 +141,11 @@
     flex-direction: column;
     align-items: center;
     padding: 30px 20px;
-    min-height: calc(100vh - 120px); /* Ajusta según la altura del header y footer */
+    min-height: calc(100vh - 160px);
 }
 
 .content-wrapper {
-    max-width: 600px; /* Limita el ancho del contenido */
+    max-width: 600px;
     width: 100%;
     text-align: center;
 }
@@ -137,17 +157,17 @@
 .welcome-text h2 {
     font-size: 28px;
     margin-bottom: 15px;
-    color: #333;
+    color: #10375C;
 }
 
 .welcome-text p {
     font-size: 16px;
-    color: #555;
+    color: #10375C;
     line-height: 1.5;
 }
 
 .novedades {
-    background-color: #fff;
+    background-color: #FFFFFF;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -157,7 +177,7 @@
 .novedades h3 {
     font-size: 24px;
     margin-bottom: 15px;
-    color: #333;
+    color: #10375C;
 }
 
 .novedades ul {
@@ -168,7 +188,7 @@
 
 .novedades ul li {
     font-size: 16px;
-    color: #555;
+    color: #10375C;
     margin-bottom: 10px;
     padding-left: 20px;
     position: relative;
@@ -176,22 +196,12 @@
 
 .novedades ul li::before {
     content: "•";
-    color: #333;
+    color: #F3C623;
     font-size: 20px;
     position: absolute;
     left: 0;
 }
 
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #222;
-    color: #D3D3D3;
-    font-size: 12px;
-    width: 100%;
-}
-
-/* Media Queries para responsividad */
 @media (max-width: 768px) {
     .navbar {
         padding: 10px 15px;
@@ -199,6 +209,10 @@ footer {
 
     .navbar-brand h1 {
         font-size: 20px;
+    }
+
+    .navbar-brand .logo {
+        max-height: 30px;
     }
 
     .navbar-menu {
@@ -248,6 +262,10 @@ footer {
         font-size: 18px;
     }
 
+    .navbar-brand .logo {
+        max-height: 25px;
+    }
+
     .dropdown .dropbtn {
         width: 32px;
         height: 32px;
@@ -272,9 +290,5 @@ footer {
 
     .novedades ul li {
         font-size: 12px;
-    }
-
-    footer {
-        font-size: 10px;
     }
 }
