@@ -1,7 +1,25 @@
-.profile-icon {
-    font-size: 60px;
-    color: #10375C; /* Azul oscuro */
-    margin-bottom: 15px;
+.profile-container {
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #10375C;
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.profile-picture {
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #10375C;
 }
 
 .profile-item {
@@ -15,16 +33,31 @@
 .profile-item i {
     margin-right: 10px;
     font-size: 18px;
-    color: #F3C623; /* Amarillo mostaza */
+    color: #F3C623;
 }
 
 .profile-item span {
     font-weight: bold;
     color: #10375C;
+    margin-right: 10px;
+}
+
+.profile-item input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #10375C;
+    border-radius: 4px;
+    background-color: #F4F6FF;
+    color: #10375C;
+}
+
+.profile-item p {
+    margin: 0;
+    color: #10375C;
 }
 
 .btn-back {
-    background-color: #F3C623; /* Amarillo mostaza */
+    background-color: #F3C623;
     color: #10375C;
     padding: 8px 16px;
     font-size: 14px;
@@ -33,13 +66,14 @@
 }
 
 .btn-back:hover {
-    background-color: #EB8317; /* Naranja al pasar el mouse */
+    background-color: #EB8317;
     color: #FFFFFF;
 }
 
 @media (max-width: 768px) {
-    .profile-icon {
-        font-size: 50px;
+    .profile-picture img {
+        width: 80px;
+        height: 80px;
     }
 
     .profile-item {

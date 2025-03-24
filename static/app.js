@@ -1,141 +1,114 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Función para mostrar mensajes flash
-    function showFlashMessage(message, category) {
-        const flashContainer = document.getElementById('flash-messages');
-        if (flashContainer) {
-            const msg = document.createElement('div');
-            msg.className = category;
-            msg.textContent = message;
-            flashContainer.appendChild(msg);
-            setTimeout(() => msg.remove(), 3000);
+// Función para manejar la respuesta de Google Sign-In
+function handleCredentialResponse(response) {
+    const responsePayload = parseJwt(response.credential);
+    if (responsePayload.email && responsePayload.email.endsWith('@uptc.edu.co')) {
+        localStorage.setItem('user', JSON.stringify({
+            name: responsePayload.name,
+            email: responsePayload.email,
+            picture: responsePayload.picture
+        }));
+        showFlashMessage('Inicio de sesión exitoso', 'success');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1000);
+    } else {
+        showFlashMessage('Por favor, usa un correo institucional (@uptc.edu.co)', 'error');
+    }
+}
+
+// Función para decodificar el token JWT de Google Sign-In
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
+// Función para mostrar mensajes flash (éxito o error)
+function showFlashMessage(message, type) {
+    const flashMessages = document.getElementById('flash-messages');
+    if (flashMessages) {
+        flashMessages.innerHTML = `<div class="${type}">${message}</div>`;
+    }
+}
+
+// Función para actualizar el nombre del usuario en el perfil
+function updateProfileName() {
+    const nameInput = document.getElementById('profile-name');
+    const newName = nameInput.value.trim();
+    if (newName) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.name = newName;
+        localStorage.setItem('user', JSON.stringify(user));
+        showFlashMessage('Nombre actualizado correctamente', 'success');
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    } else {
+        showFlashMessage('Por favor, ingresa un nombre válido', 'error');
+    }
+}
+
+// Código principal que se ejecuta cuando el DOM está completamente cargado
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar datos del usuario desde localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        const usernameElement = document.getElementById('username');
+        const userInitialElement = document.getElementById('user-initial');
+        const profilePicElement = document.getElementById('profile-pic');
+        const profileNameElement = document.getElementById('profile-name');
+        const profileEmailElement = document.getElementById('profile-email');
+
+        if (usernameElement) usernameElement.textContent = user.name.split(' ')[0];
+        if (userInitialElement) userInitialElement.textContent = user.name.charAt(0).toUpperCase();
+        if (profilePicElement) profilePicElement.src = user.picture || 'https://via.placeholder.com/100';
+        if (profileNameElement) profileNameElement.value = user.name;
+        if (profileEmailElement) profileEmailElement.textContent = user.email;
+
+        // Manejar el cambio de foto de perfil
+        const profilePicInput = document.getElementById('profile-pic-input');
+        if (profilePicInput) {
+            profilePicInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        user.picture = event.target.result;
+                        localStorage.setItem('user', JSON.stringify(user));
+                        profilePicElement.src = user.picture;
+                        showFlashMessage('Foto de perfil actualizada', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         }
     }
 
-    // Alternar visibilidad de contraseñas
-    document.querySelectorAll(".password-group").forEach(group => {
-        const passwordField = group.querySelector("input[type='password']");
-        const toggle = group.querySelector(".toggle-password");
-        if (passwordField && toggle) {
-            toggle.addEventListener("click", function () {
-                const isHidden = passwordField.type === "password";
-                passwordField.type = isHidden ? "text" : "password";
-                toggle.classList.toggle("fa-eye", isHidden);
-                toggle.classList.toggle("fa-eye-slash", !isHidden);
-            });
-        }
+    // Manejar el cierre de sesión
+    const logoutLinks = document.querySelectorAll('#logout, #mobile-logout');
+    logoutLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            showFlashMessage('Sesión cerrada', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        });
     });
 
-    // Menú hamburguesa
+    // Manejar el menú hamburguesa
     const hamburger = document.querySelector('.hamburger');
     const mobileMenu = document.querySelector('.mobile-menu');
     if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active'); // Usamos 'active' en lugar de 'hidden'
+            mobileMenu.classList.toggle('active');
+            console.log('Hamburger clicked, mobile menu toggled. Active state:', mobileMenu.classList.contains('active')); // Depuración
         });
+    } else {
+        console.error('Hamburger or mobile menu not found in the DOM'); // Depuración en caso de error
     }
-
-    // Verificar sesión
-    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    if (loggedUser && window.location.pathname.includes('index.html')) {
-        document.getElementById('username').textContent = loggedUser.usuario;
-        document.getElementById('user-initial').textContent = loggedUser.usuario[0].toUpperCase();
-    } else if (!loggedUser && !window.location.pathname.includes('login.html') && !window.location.pathname.includes('registro.html') && !window.location.pathname.includes('recuperar_contrasena.html') && !window.location.pathname.includes('restablecer_contrasena.html')) {
-        window.location.href = 'login.html';
-    }
-
-    // Login
-    const loginForm = document.querySelector('.login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const usuario = loginForm.querySelector('input[name="usuario"]').value;
-            const contrasena = loginForm.querySelector('input[name="contrasena"]').value;
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.usuario === usuario && u.contrasena === contrasena);
-            if (user) {
-                localStorage.setItem('loggedUser', JSON.stringify(user));
-                window.location.href = 'index.html';
-            } else {
-                showFlashMessage('Usuario o contraseña incorrectos.', 'error');
-            }
-        });
-    }
-
-    // Registro
-    const registroForm = document.querySelector('.registro-form');
-    if (registroForm) {
-        registroForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const usuario = registroForm.querySelector('input[name="usuario"]').value;
-            const email = registroForm.querySelector('input[name="email"]').value;
-            const contrasena = registroForm.querySelector('input[name="contrasena"]').value;
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            if (users.some(u => u.email === email)) {
-                showFlashMessage('El correo ya está registrado.', 'error');
-            } else {
-                const newUser = { usuario, email, contrasena };
-                users.push(newUser);
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('loggedUser', JSON.stringify(newUser));
-                window.location.href = 'index.html';
-            }
-        });
-    }
-
-    // Perfil
-    if (document.querySelector('.profile-container')) {
-        const user = JSON.parse(localStorage.getItem('loggedUser'));
-        if (user) {
-            document.getElementById('profile-username').textContent = user.usuario;
-            document.getElementById('profile-email').textContent = user.email;
-        } else {
-            window.location.href = 'login.html';
-        }
-    }
-
-    // Recuperar contraseña (simulado)
-    const recuperarForm = document.querySelector('#recuperar-form');
-    if (recuperarForm) {
-        recuperarForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = recuperarForm.querySelector('input[name="email"]').value;
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            if (users.some(u => u.email === email)) {
-                showFlashMessage('Se ha enviado un enlace de recuperación a ' + email + ' (simulado).', 'success');
-                setTimeout(() => window.location.href = 'restablecer_contrasena.html', 2000);
-            } else {
-                showFlashMessage('Correo no registrado.', 'error');
-            }
-        });
-    }
-
-    // Restablecer contraseña (simulado)
-    const restablecerForm = document.querySelector('#restablecer-form');
-    if (restablecerForm) {
-        restablecerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nuevaContrasena = restablecerForm.querySelector('input[name="nueva_contrasena"]').value;
-            const user = JSON.parse(localStorage.getItem('loggedUser'));
-            if (user) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const updatedUsers = users.map(u => u.email === user.email ? { ...u, contrasena: nuevaContrasena } : u);
-                localStorage.setItem('users', JSON.stringify(updatedUsers));
-                localStorage.setItem('loggedUser', JSON.stringify({ ...user, contrasena: nuevaContrasena }));
-                showFlashMessage('Contraseña restablecida con éxito.', 'success');
-                setTimeout(() => window.location.href = 'login.html', 2000);
-            } else {
-                showFlashMessage('No hay sesión activa.', 'error');
-            }
-        });
-    }
-
-    // Logout
-    document.getElementById('logout')?.addEventListener('click', () => {
-        localStorage.removeItem('loggedUser');
-        window.location.href = 'login.html';
-    });
-    document.getElementById('mobile-logout')?.addEventListener('click', () => {
-        localStorage.removeItem('loggedUser');
-        window.location.href = 'login.html';
-    });
 });

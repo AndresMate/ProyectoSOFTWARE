@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal - System Foro Tec</title>
+    <title>Proyectos - System Foro Tec</title>
     <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
     <link rel="stylesheet" href="../static/global.css">
     <link rel="stylesheet" href="../static/index.css">
@@ -49,41 +49,24 @@
 
     <main class="main-container">
         <div class="content-wrapper">
-            <div class="welcome-text">
-                <h2>¡Bienvenido a Systems Foro Tec!</h2>
-                <p>Una plataforma para estudiantes de Ingeniería de Sistemas de la UPTC. Explora nuestras secciones y únete a la comunidad.</p>
-            </div>
-            <section class="novedades">
-                <h3>Novedades</h3>
-                <ul>
-                    <li>¡Nuevo sistema de recompensas disponible!</li>
-                    <li>Próxima actualización de funciones en 2 días.</li>
-                    <li>Nuevo diseño de perfil ya disponible.</li>
-                </ul>
-            </section>
-            <section class="quick-links">
-                <h3>Explora nuestras secciones</h3>
-                <div class="links-grid">
-                    <a href="foros.html" class="link-card">
-                        <i class="fas fa-comments"></i>
-                        <h4>Foros</h4>
-                        <p>Participa en discusiones y resuelve dudas.</p>
-                    </a>
-                    <a href="proyectos.html" class="link-card">
-                        <i class="fas fa-project-diagram"></i>
-                        <h4>Proyectos</h4>
-                        <p>Comparte y descubre proyectos personales.</p>
-                    </a>
-                    <a href="tutorias.html" class="link-card">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        <h4>Tutorías</h4>
-                        <p>Busca o inscríbete en tutorías.</p>
-                    </a>
-                    <a href="anuncios.html" class="link-card">
-                        <i class="fas fa-bullhorn"></i>
-                        <h4>Anuncios</h4>
-                        <p>Mantente al día con los eventos.</p>
-                    </a>
+            <section class="proyectos">
+                <h2>Proyectos Personales</h2>
+                <div class="proyectos-actions">
+                    <button id="upload-project-btn" class="btn">Subir Proyecto</button>
+                </div>
+                <div class="proyectos-list">
+                    <div class="proyecto-item">
+                        <h4>Aplicación de Gestión de Tareas</h4>
+                        <p><strong>Autor:</strong> Carlos Rodríguez | <strong>Fecha:</strong> 2024-10-18</p>
+                        <p>Una aplicación web para gestionar tareas diarias, desarrollada con React y Node.js.</p>
+                        <button class="btn view-project-btn">Ver Detalles</button>
+                    </div>
+                    <div class="proyecto-item">
+                        <h4>Sistema de Recomendación de Películas</h4>
+                        <p><strong>Autor:</strong> Ana López | <strong>Fecha:</strong> 2024-10-15</p>
+                        <p>Un sistema de recomendación basado en machine learning, usando Python y TensorFlow.</p>
+                        <button class="btn view-project-btn">Ver Detalles</button>
+                    </div>
                 </div>
             </section>
         </div>

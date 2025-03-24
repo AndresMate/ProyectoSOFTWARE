@@ -45,7 +45,7 @@
 }
 
 .dropdown {
-    position: relative; /* Necesario para que el dropdown-content se posicione respecto a este elemento */
+    position: relative;
 }
 
 .dropdown .dropbtn {
@@ -65,8 +65,8 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%; /* Se posiciona justo debajo del botón */
-    right: 0; /* Alineado a la derecha del botón */
+    top: 100%;
+    right: 0;
     background-color: #10375C;
     min-width: 180px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -119,6 +119,7 @@
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
 }
 
 .mobile-menu.active {
@@ -145,7 +146,7 @@
 }
 
 .content-wrapper {
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
     text-align: center;
 }
@@ -202,6 +203,230 @@
     left: 0;
 }
 
+.quick-links {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.quick-links h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #10375C;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.link-card {
+    background-color: #F4F6FF;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.link-card:hover {
+    transform: translateY(-5px);
+    background-color: #F3C623;
+}
+
+.link-card i {
+    font-size: 30px;
+    color: #10375C;
+    margin-bottom: 10px;
+}
+
+.link-card h4 {
+    font-size: 18px;
+    color: #10375C;
+    margin-bottom: 5px;
+}
+
+.link-card p {
+    font-size: 14px;
+    color: #10375C;
+}
+
+.foros, .proyectos, .tutorias, .anuncios {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.foros h2, .proyectos h2, .tutorias h2, .anuncios h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #10375C;
+}
+
+.foro-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.foro-filters label {
+    margin-right: 10px;
+    color: #10375C;
+}
+
+.foro-filters select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #10375C;
+    background-color: #F4F6FF;
+    color: #10375C;
+}
+
+.foro-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.foro-post {
+    background-color: #F4F6FF;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.foro-post h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #10375C;
+}
+
+.foro-post p {
+    font-size: 14px;
+    color: #10375C;
+    margin: 5px 0;
+}
+
+.foro-post .reply-btn {
+    width: auto;
+    padding: 5px 15px;
+    font-size: 14px;
+}
+
+.proyectos-actions {
+    margin-bottom: 20px;
+}
+
+.proyectos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.proyecto-item {
+    background-color: #F4F6FF;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.proyecto-item h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #10375C;
+}
+
+.proyecto-item p {
+    font-size: 14px;
+    color: #10375C;
+    margin: 5px 0;
+}
+
+.proyecto-item .view-project-btn {
+    width: auto;
+    padding: 5px 15px;
+    font-size: 14px;
+}
+
+.tutorias-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tutorias-filters label {
+    color: #10375C;
+}
+
+.tutorias-filters select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #10375C;
+    background-color: #F4F6FF;
+    color: #10375C;
+}
+
+.tutorias-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tutoria-item {
+    background-color: #F4F6FF;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tutoria-item h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #10375C;
+}
+
+.tutoria-item p {
+    font-size: 14px;
+    color: #10375C;
+    margin: 5px 0;
+}
+
+.tutoria-item .enroll-btn {
+    width: auto;
+    padding: 5px 15px;
+    font-size: 14px;
+}
+
+.anuncios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.anuncio-item {
+    background-color: #F4F6FF;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.anuncio-item h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #10375C;
+}
+
+.anuncio-item p {
+    font-size: 14px;
+    color: #10375C;
+    margin: 5px 0;
+}
+
 @media (max-width: 768px) {
     .navbar {
         padding: 10px 15px;
@@ -224,6 +449,14 @@
     }
 
     .mobile-menu {
+        display: none; /* Aseguramos que esté oculto por defecto */
+    }
+
+    .mobile-menu.active {
+        display: flex; /* Mostrar cuando tiene la clase active */
+    }
+
+    .mobile-menu {
         top: 50px;
         right: 5px;
     }
@@ -236,7 +469,7 @@
         max-width: 90%;
     }
 
-    .welcome-text h2 {
+    .welcome-text h2, .foros h2, .proyectos h2, .tutorias h2, .anuncios h2 {
         font-size: 24px;
     }
 
@@ -244,16 +477,51 @@
         font-size: 14px;
     }
 
-    .novedades {
-        padding: 15px;
-    }
-
-    .novedades h3 {
+    .novedades h3, .quick-links h3 {
         font-size: 20px;
     }
 
     .novedades ul li {
         font-size: 14px;
+    }
+
+    .link-card h4 {
+        font-size: 16px;
+    }
+
+    .link-card p {
+        font-size: 12px;
+    }
+
+    .foro-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .foro-filters {
+        width: 100%;
+        text-align: center;
+    }
+
+    .foro-filters select {
+        width: 100%;
+    }
+
+    .foro-post h4, .proyecto-item h4, .tutoria-item h4, .anuncio-item h4 {
+        font-size: 16px;
+    }
+
+    .foro-post p, .proyecto-item p, .tutoria-item p, .anuncio-item p {
+        font-size: 12px;
+    }
+
+    .tutorias-filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tutorias-filters select {
+        width: 100%;
     }
 }
 
@@ -276,7 +544,7 @@
         top: 45px;
     }
 
-    .welcome-text h2 {
+    .welcome-text h2, .foros h2, .proyectos h2, .tutorias h2, .anuncios h2 {
         font-size: 20px;
     }
 
@@ -284,7 +552,7 @@
         font-size: 12px;
     }
 
-    .novedades h3 {
+    .novedades h3, .quick-links h3 {
         font-size: 18px;
     }
 
