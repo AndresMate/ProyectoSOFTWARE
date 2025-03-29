@@ -1,31 +1,28 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import User from "../models/User";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
-export interface AuthRequest extends Request {
-    user?: { id: string };
+declare global {
+    namespace Express {
+        interface Request {
+            user?: any;
+        }
+    }
 }
 
-export const verifyToken = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+export const verificarToken = (req: Request, res: Response, next: NextFunction): void => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+        res.status(401).json({ mensaje: 'Acceso denegado. Token no proporcionado' });
+        return;
+    }
+
     try {
-        const token = req.header("Authorization")?.split(" ")[1];
-
-        if (!token) {
-            res.status(401).json({ message: "Access denied. No token provided." });
-            return;
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
-        req.user = { id: decoded.id };
-
-        const user = await User.findById(req.user.id);
-        if (!user) {
-            res.status(401).json({ message: "Invalid token" });
-            return;
-        }
-
-        next(); // ✅ Solo se llama a next()
+        const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET || 'secreto');
+        req.user = decoded;
+        next(); // Se asegura de continuar la ejecución
     } catch (error) {
-        res.status(401).json({ message: "Invalid token" });
+        res.status(403).json({ mensaje: 'Token inválido o expirado' });
+        return;
     }
 };
