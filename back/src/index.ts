@@ -1,22 +1,15 @@
-import express, { Request, Response } from "express";
-import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db";
+import connectDB from "./config/db"; // Asegúrate de que la ruta sea correcta
 import authRoutes from "./routes/authRoutes";
 
-
 dotenv.config();
-const app = express();
+connectDB(); // Se conecta a la base de datos
 
-app.use(cors());
-app.use(express.json());
+const app = express();
+app.use(express.json()); // Permite recibir JSON en los requests
+
 app.use("/api/auth", authRoutes);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("API del foro funcionando!");
-});
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
-
-connectDB();
+app.listen(PORT, () => console.log(`🔥 Servidor corriendo en el puerto ${PORT}`));

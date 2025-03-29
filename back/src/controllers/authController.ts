@@ -1,9 +1,15 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 
 export const register = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errores: errors.array() });
+  }
+
   try {
     const { nombre, correo, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -16,6 +22,11 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response): Promise<Response | void> => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errores: errors.array() });
+  }
+
   try {
     const { correo, password } = req.body;
     if (!correo || !password) {
@@ -53,4 +64,3 @@ export const login = async (req: Request, res: Response): Promise<Response | voi
     return res.status(500).json({ mensaje: "Error interno del servidor" });
   }
 };
-
