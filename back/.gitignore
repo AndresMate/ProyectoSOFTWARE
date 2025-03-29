@@ -24,6 +24,7 @@ jspm_packages/
 .node_repl_history
 
 # dotenv environment variables file
+
 .env
 
 # IDEs and editors
