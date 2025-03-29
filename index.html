@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal - System Foro Tec</title>
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
-    <link rel="stylesheet" href="../static/global.css">
-    <link rel="stylesheet" href="../static/index.css">
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico">
+    <link rel="stylesheet" href="static/global.css">
+    <link rel="stylesheet" href="static/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script defer src="../static/app.js"></script>
+    <script defer src="static/app.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="navbar-brand">
-                <img src="../static/img/logo1.png" alt="System Foro Tec Logo" class="logo">
+                <img src="static/img/logo1.png" alt="System Foro Tec Logo" class="logo">
                 <h1>Bienvenido, <span id="username">Usuario</span>!</h1>
             </div>
             <ul class="navbar-menu">
                 <li><a href="index.html">INICIO</a></li>
-                <li><a href="foros.html">FOROS</a></li>
-                <li><a href="proyectos.html">PROYECTOS</a></li>
-                <li><a href="tutorias.html">TUTORÍAS</a></li>
-                <li><a href="anuncios.html">ANUNCIOS</a></li>
+                <li><a href="templates/foros.html">FOROS</a></li>
+                <li><a href="templates/proyectos.html">PROYECTOS</a></li>
+                <li><a href="templates/tutorias.html">TUTORÍAS</a></li>
+                <li><a href="templates/anuncios.html">ANUNCIOS</a></li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn" id="user-initial">U</a>
                     <div class="dropdown-content">
-                        <a href="mi_perfil.html"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="templates/mi_perfil.html"><i class="fas fa-user"></i> Mi Perfil</a>
                         <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                     </div>
                 </li>
@@ -38,11 +38,11 @@
             </button>
         </nav>
         <div class="mobile-menu hidden">
-            <a href="foros.html"><i class="fas fa-comments"></i> Foros</a>
-            <a href="proyectos.html"><i class="fas fa-project-diagram"></i> Proyectos</a>
-            <a href="tutorias.html"><i class="fas fa-chalkboard-teacher"></i> Tutorías</a>
-            <a href="anuncios.html"><i class="fas fa-bullhorn"></i> Anuncios</a>
-            <a href="mi_perfil.html"><i class="fas fa-user"></i> Mi Perfil</a>
+            <a href="templates/foros.html"><i class="fas fa-comments"></i> Foros</a>
+            <a href="templates/proyectos.html"><i class="fas fa-project-diagram"></i> Proyectos</a>
+            <a href="templates/tutorias.html"><i class="fas fa-chalkboard-teacher"></i> Tutorías</a>
+            <a href="templates/anuncios.html"><i class="fas fa-bullhorn"></i> Anuncios</a>
+            <a href="templates/mi_perfil.html"><i class="fas fa-user"></i> Mi Perfil</a>
             <a href="#" id="mobile-logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
         </div>
     </header>
@@ -64,22 +64,22 @@
             <section class="quick-links">
                 <h3>Explora nuestras secciones</h3>
                 <div class="links-grid">
-                    <a href="foros.html" class="link-card">
+                    <a href="templates/foros.html" class="link-card">
                         <i class="fas fa-comments"></i>
                         <h4>Foros</h4>
                         <p>Participa en discusiones y resuelve dudas.</p>
                     </a>
-                    <a href="proyectos.html" class="link-card">
+                    <a href="templates/proyectos.html" class="link-card">
                         <i class="fas fa-project-diagram"></i>
                         <h4>Proyectos</h4>
                         <p>Comparte y descubre proyectos personales.</p>
                     </a>
-                    <a href="tutorias.html" class="link-card">
+                    <a href="templates/tutorias.html" class="link-card">
                         <i class="fas fa-chalkboard-teacher"></i>
                         <h4>Tutorías</h4>
                         <p>Busca o inscríbete en tutorías.</p>
                     </a>
-                    <a href="anuncios.html" class="link-card">
+                    <a href="templates/anuncios.html" class="link-card">
                         <i class="fas fa-bullhorn"></i>
                         <h4>Anuncios</h4>
                         <p>Mantente al día con los eventos.</p>
@@ -90,7 +90,7 @@
     </main>
 
     <footer>
-        <img src="../static/img/logo1.png" alt="System Foro Tec Logo" class="footer-logo">
+        <img src="static/img/logo1.png" alt="System Foro Tec Logo" class="footer-logo">
         <p>© 2025 System Foro Tec. Todos los derechos reservados.</p>
     </footer>
 </body>
