@@ -11,13 +11,20 @@ export const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const { nombre, correo, password } = req.body;
+    const { nombre, email, password } = req.body;
+
+    // Verificar si el correo ya existe
+    const existingUser = await User.findOne({  email });
+    if (existingUser) {
+      return res.status(400).json({ mensaje: "El correo ya está registrado" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ nombre, correo, password: hashedPassword });
+    const newUser = new User({ nombre, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ mensaje: "Usuario registrado con éxito" });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error en el registro" });
+    res.status(500).json({ mensaje: "Error en el registro", error: error });
   }
 };
 
@@ -28,12 +35,12 @@ export const login = async (req: Request, res: Response): Promise<Response | voi
   }
 
   try {
-    const { correo, password } = req.body;
-    if (!correo || !password) {
+    const { email, password } = req.body;
+    if (!email || !password) {
       return res.status(400).json({ mensaje: "Correo y contraseña son obligatorios" });
     }
 
-    const usuario = await User.findOne({ correo });
+    const usuario = await User.findOne({ email });
     if (!usuario) {
       return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
@@ -55,7 +62,7 @@ export const login = async (req: Request, res: Response): Promise<Response | voi
       usuario: {
         id: usuario._id,
         nombre: usuario.nombre,
-        correo: usuario.correo,
+        email: usuario.email,
         rol: usuario.rol,
       },
     });
