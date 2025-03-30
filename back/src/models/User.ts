@@ -1,10 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+export interface IUser extends Document {
+  nombre: string;
+  correo: string;
+  password: string;
+  rol: "usuario" | "moderador" | "admin";
+  verificado: boolean;
+  tokenVerificacion?: string;
+}
+
+const UserSchema = new Schema<IUser>({
   nombre: { type: String, required: true },
-  email: { type: String, required: true, unique: true }, // Cambiado de "correo" a "email"
+  correo: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  rol: { type: String, enum: ["usuario", "moderador", "admin"], default: "usuario" }
+  rol: { type: String, enum: ["usuario", "moderador", "admin"], default: "usuario" },
+  verificado: { type: Boolean, default: false },
+  tokenVerificacion: { type: String },
 });
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model<IUser>("User", UserSchema);
