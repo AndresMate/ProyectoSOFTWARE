@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-
 export interface IUser extends Document {
   nombre: string;
   correo: string;
