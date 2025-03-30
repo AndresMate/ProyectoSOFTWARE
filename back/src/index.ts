@@ -5,11 +5,17 @@ import authRoutes from "./routes/authRoutes";
 import usuariosRoutes from './routes/usuariosRoutes';
 import postRoutes from "./routes/postRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
+import cors from "cors";
 
 dotenv.config();
 connectDB(); // Se conecta a la base de datos
 
 const app = express();
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true
+}));
 app.use(express.json()); // Permite recibir JSON en los requests
 
 app.use("/api/auth", authRoutes);

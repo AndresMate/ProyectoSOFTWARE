@@ -1,6 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import { register, login, verificarCorreo, reenviarVerificacion } from "../controllers/authController";
+import {verificarToken} from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
@@ -34,5 +35,7 @@ router.post(
   [body("email").isEmail().withMessage("Debe ser un correo válido")],
   reenviarVerificacion as express.RequestHandler
 );
+
+
 
 export default router;

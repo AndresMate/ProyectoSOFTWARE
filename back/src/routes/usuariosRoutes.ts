@@ -4,13 +4,17 @@ import {
     obtenerUsuarioPorId,
     crearUsuario,
     actualizarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    obtenerPerfil
 } from '../controllers/userController';
 import { verificarToken } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-// Rutas protegidas con middleware de autenticación
+// Ruta para obtener el perfil del usuario autenticado
+router.get('/perfil', verificarToken, obtenerPerfil);
+
+// Otras rutas protegidas
 router.get('/', verificarToken, obtenerUsuarios);
 router.get('/:id', verificarToken, obtenerUsuarioPorId);
 router.post('/', verificarToken, crearUsuario);

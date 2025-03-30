@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
+import user from "../models/User";
 
 // Obtener todos los usuarios
 export const obtenerUsuarios = async (req: Request, res: Response): Promise<void> => {
@@ -61,5 +62,29 @@ export const eliminarUsuario = async (req: Request, res: Response): Promise<void
         res.json({ mensaje: 'Usuario eliminado correctamente' });
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al eliminar el usuario', error });
+    }
+};
+
+export const obtenerPerfil = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // El middleware `verificarToken` ya agregó `req.usuario`
+        const usuarioId = req.user?.id;
+
+        if (!usuarioId) {
+            res.status(401).json({ mensaje: "Usuario no autorizado" });
+            return;
+        }
+
+        // Buscar al usuario en la base de datos
+        const usuario = await User.findById(usuarioId).select('-password');
+
+        if (!usuario) {
+            res.status(404).json({ mensaje: "Usuario no encontrado" });
+            return;
+        }
+
+        res.json(usuario);
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al obtener el perfil", error });
     }
 };

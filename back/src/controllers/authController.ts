@@ -97,7 +97,7 @@ export const register = async (req: Request, res: Response) => {
 
     // Enviar correo de verificación
     try {
-      const url = `${process.env.CLIENT_URL}/api/auth/verificar/${token}`;
+      const url = `http://localhost:3000/auth/verificar/${token}`;
       await transporter.sendMail({
         to: usuario.correo,
         subject: "Verifica tu cuenta",
