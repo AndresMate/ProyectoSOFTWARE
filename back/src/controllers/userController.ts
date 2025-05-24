@@ -38,19 +38,49 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
 };
 
 // Actualizar un usuario
+// Agregar esta función a tu userController.ts
+
 export const actualizarUsuario = async (req: Request, res: Response): Promise<void> => {
     try {
-        const usuarioActualizado = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        // El middleware `verificarToken` ya agregó `req.usuario`
+        const usuarioId = req.user?.id;
+
+        if (!usuarioId) {
+            res.status(401).json({ mensaje: "Usuario no autorizado" });
+            return;
+        }
+
+        const { nombre, correo } = req.body;
+
+        // Validar que los campos requeridos estén presentes
+        if (!nombre || !correo) {
+            res.status(400).json({ mensaje: "Nombre y correo son requeridos" });
+            return;
+        }
+
+        // Filtrar los campos que se pueden actualizar
+        const camposActualizables: any = {};
+        if (nombre) camposActualizables.nombre = nombre;
+        if (correo) camposActualizables.correo = correo;
+
+        const usuarioActualizado = await User.findByIdAndUpdate(
+            usuarioId,
+            camposActualizables,
+            { new: true }
+        ).select('-password'); // No devolver la contraseña
+
         if (!usuarioActualizado) {
+            console.log(`Usuario no encontrado con ID: ${usuarioId}`);
             res.status(404).json({ mensaje: 'Usuario no encontrado' });
             return;
         }
+
         res.json(usuarioActualizado);
     } catch (error) {
-        res.status(400).json({ mensaje: 'Error al actualizar el usuario', error });
+        console.error('Error al actualizar perfil:', error);
+        res.status(400).json({ mensaje: 'Error al actualizar el perfil', error });
     }
 };
-
 // Eliminar un usuario
 export const eliminarUsuario = async (req: Request, res: Response): Promise<void> => {
     try {

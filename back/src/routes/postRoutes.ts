@@ -4,14 +4,32 @@ import { verificarToken } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post("/", verificarToken, crearPost); // Crear post (protegida)
-router.get("/all", obtenerPosts); // Obtener todos los posts
-router.post("/:postId/comentar", verificarToken, comentarPost); // Comentar un post (protegida)
-router.post("/like/:id", verificarToken, likePost as express.RequestHandler); // Dar o quitar like a un post (protegida)
-router.put("/:postId", verificarToken, editarPost as express.RequestHandler); // Editar post
-router.delete("/:postId", verificarToken, eliminarPost as express.RequestHandler); // Eliminar post
-router.put("/:comentarioId/comentario", verificarToken, editarComentario as express.RequestHandler); // Editar comentario
-router.delete("/:comentarioId/comentario", verificarToken, eliminarComentario as express.RequestHandler); // Eliminar comentario
-router.get("/", obtenerPostsPaginados); // Obtener posts paginados
+// Crear un nuevo post
+router.post("/", verificarToken, crearPost);
+
+// Obtener todos los posts (sin paginación) → solo si la necesitas además de la paginación
+router.get("/all", obtenerPosts);
+
+// Obtener posts paginados
+router.get("/", obtenerPostsPaginados);
+
+// Comentar un post
+router.post("/:postId/comentar", verificarToken, comentarPost);
+
+// Dar o quitar like
+router.post("/like/:id", verificarToken, likePost as express.RequestHandler);
+
+// Editar post
+router.put("/:postId", verificarToken, editarPost as express.RequestHandler);
+
+// Eliminar post
+router.delete("/:postId", verificarToken, eliminarPost as express.RequestHandler);
+
+// Editar comentario
+router.put("/:comentarioId/comentario", verificarToken, editarComentario as express.RequestHandler);
+
+// Eliminar comentario
+router.delete("/:comentarioId/comentario", verificarToken, eliminarComentario as express.RequestHandler);
+
 
 export default router;

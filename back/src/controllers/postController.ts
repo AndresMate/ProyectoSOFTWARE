@@ -21,10 +21,13 @@ export const obtenerPosts = async (_req: Request, res: Response) => {
   try {
     const posts = await Post.find().populate("autor", "nombre email");
     res.json(posts);
-  } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener los posts" });
-  }
+} catch (error) {
+  const err = error as Error;
+  console.error("Error al obtener los posts:", err.message);
+  res.status(500).json({ mensaje: "Error al obtener los posts", error: err.message });
+}
 };
+
 
 // Comentar en un post
 export const comentarPost = async (req: Request, res: Response) => {

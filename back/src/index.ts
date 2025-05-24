@@ -12,12 +12,13 @@ connectDB(); // Se conecta a la base de datos
 
 const app = express();
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",
   methods: "GET,POST,PUT,DELETE",
   credentials: true
 }));
 app.use(express.json()); // Permite recibir JSON en los requests
 
+//RUTAS
 app.use("/api/auth", authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use("/api/posts", postRoutes);

@@ -33,7 +33,7 @@ const Login = () => {
       localStorage.setItem("token", data.token);
 
       // Redirigir a la página principal o dashboard
-      router.push("/dashboard");
+      router.push("/foro");
 
     } catch (error) {
       setError((error as Error).message);

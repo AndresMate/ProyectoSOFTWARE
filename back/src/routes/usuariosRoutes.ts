@@ -13,7 +13,7 @@ const router = Router();
 
 // Ruta para obtener el perfil del usuario autenticado
 router.get('/perfil', verificarToken, obtenerPerfil);
-
+router.put('/perfil', verificarToken, actualizarUsuario);
 // Otras rutas protegidas
 router.get('/', verificarToken, obtenerUsuarios);
 router.get('/:id', verificarToken, obtenerUsuarioPorId);

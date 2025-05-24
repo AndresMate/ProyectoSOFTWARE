@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import Usuario from "./User"; // Importa el modelo Usuario para registrarlo
 
 interface IPost extends Document {
   titulo: string;
@@ -13,13 +14,12 @@ const PostSchema = new Schema<IPost>(
   {
     titulo: { type: String, required: true },
     contenido: { type: String, required: true },
-    autor: { type: Schema.Types.ObjectId, ref: "Usuario", required: true }, // Relación con Usuario
+    autor: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Relación con Usuario
     comentarios: [{ type: Schema.Types.ObjectId, ref: "Comentario" }], // Relación con comentarios
-    likes: [{ type: Schema.Types.ObjectId, ref: "Usuario" }], // Lista de usuarios que dieron like
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }], // Lista de usuarios que dieron like
     fechaCreacion: { type: Date, default: Date.now }, // Fecha de creación automática
   },
   { timestamps: true }
 );
-
 
 export default mongoose.model<IPost>("Post", PostSchema);
