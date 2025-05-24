@@ -17,7 +17,7 @@ const Dashboard = () => {
                 const token = localStorage.getItem("token"); // Obtener token del localStorage
                 if (!token) throw new Error("No hay token disponible");
 
-                const respuesta = await fetch("http://localhost:5000/api/usuarios/perfil", {
+                const respuesta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/usuarios/perfil`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
