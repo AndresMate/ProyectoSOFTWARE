@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
-import user from "../models/User";
 
 // Obtener todos los usuarios
-export const obtenerUsuarios = async (req: Request, res: Response): Promise<void> => {
+export const obtenerUsuarios = async (_req: Request, res: Response): Promise<void> => {
     try {
         const usuarios = await User.find();
         res.json(usuarios);

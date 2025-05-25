@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext"; // Importa el contexto
 
 const Login = () => {
   const router = useRouter();
+  const { login } = useAuth(); // Usa el método login del contexto
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,13 +17,12 @@ const Login = () => {
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
-       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ correo, password }),
-    });
-
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ correo, password }),
+      });
 
       const data = await res.json();
 
@@ -29,12 +30,11 @@ const Login = () => {
         throw new Error(data.mensaje || "Error en el inicio de sesión");
       }
 
-      // Guardar token en localStorage o cookies
-      localStorage.setItem("token", data.token);
+      // Usa el método login del contexto para actualizar el estado global
+      login(data.token);
 
-      // Redirigir a la página principal o dashboard
+      // Redirige a la página principal o dashboard
       router.push("/foro");
-
     } catch (error) {
       setError((error as Error).message);
     }
@@ -77,6 +77,16 @@ const Login = () => {
             Iniciar sesión
           </button>
         </form>
+
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-400">¿No tienes una cuenta?</p>
+          <button
+            onClick={() => router.push("/auth/register")}
+            className="text-blue-500 hover:underline"
+          >
+            Regístrate aquí
+          </button>
+        </div>
       </div>
     </div>
   );

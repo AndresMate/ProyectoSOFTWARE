@@ -6,7 +6,7 @@ export default function Home() {
         Un espacio para compartir conocimientos y debatir temas de ingeniería de sistemas.
       </p>
       <a
-        href="/posts"
+        href="/foro"
         className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition"
       >
         Ver Publicaciones
