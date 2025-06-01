@@ -1,5 +1,16 @@
 import express from "express";
-import { crearPost, obtenerPosts, comentarPost, likePost, editarPost, eliminarPost, eliminarComentario, obtenerPostsPaginados, editarComentario } from "../controllers/postController";
+import {
+  crearPost,
+  obtenerPosts,
+  comentarPost,
+  likePost,
+  editarPost,
+  eliminarPost,
+  eliminarComentario,
+  obtenerPostsPaginados,
+  editarComentario,
+  obtenerPostPorId
+} from "../controllers/postController";
 import { verificarToken } from "../middlewares/authMiddleware";
 
 const router = express.Router();
@@ -22,6 +33,9 @@ router.post("/like/:id", verificarToken, likePost as express.RequestHandler);
 // Editar post
 router.put("/:postId", verificarToken, editarPost as express.RequestHandler);
 
+// Obtener un post por ID
+router.get("/:postId", obtenerPostPorId as express.RequestHandler); // en postRoutes
+
 // Eliminar post
 router.delete("/:postId", verificarToken, eliminarPost as express.RequestHandler);
 
@@ -30,6 +44,5 @@ router.put("/:comentarioId/comentario", verificarToken, editarComentario as expr
 
 // Eliminar comentario
 router.delete("/:comentarioId/comentario", verificarToken, eliminarComentario as express.RequestHandler);
-
 
 export default router;

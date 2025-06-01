@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 
 interface Post {
   _id: string;
@@ -59,14 +61,19 @@ useEffect(() => {
       ) : (
         <div className="space-y-4">
           {posts.map((post) => (
-            <div key={post._id} className="bg-gray-800 p-4 rounded shadow">
+            <Link
+              key={post._id}
+              href={`/foro/${post._id}`}
+              className="block bg-gray-800 p-4 rounded shadow hover:bg-gray-700 transition"
+            >
               <h2 className="text-xl font-bold">{post.titulo}</h2>
-              <p className="text-gray-300">{post.contenido}</p>
+              <p className="text-gray-300 line-clamp-2">{post.contenido}</p>
               <p className="text-sm text-gray-500 mt-2">
                 Por {post.autor.nombre} - {new Date(post.fechaCreacion).toLocaleString()}
               </p>
-            </div>
+            </Link>
           ))}
+
         </div>
       )}
     </div>

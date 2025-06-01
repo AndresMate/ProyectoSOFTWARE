@@ -131,20 +131,17 @@ export const eliminarComentario = async (req: Request, res: Response) => {
 // Función para dar o quitar "Me gusta" a un post
 export const likePost = async (req: Request, res: Response) => {
   try {
-    const { postId } = req.params; // Obtenemos el ID del post desde la URL
-    const usuarioId = req.user.id; // Obtenemos el ID del usuario autenticado
+    const { id } = req.params;
+    const usuarioId = req.user.id;
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(id);
     if (!post) return res.status(404).json({ mensaje: "Post no encontrado" });
 
-    // Verificar si el usuario ya dio like
-    const index = post.likes.indexOf(usuarioId);
+    const yaDioLike = post.likes.some((likeId) => likeId.toString() === usuarioId);
 
-    if (index !== -1) {
-      // Si el usuario ya dio like, lo quitamos
-      post.likes.splice(index, 1);
+    if (yaDioLike) {
+      post.likes = post.likes.filter((likeId) => likeId.toString() !== usuarioId);
     } else {
-      // Si el usuario no ha dado like, lo agregamos
       post.likes.push(usuarioId);
     }
 
@@ -154,6 +151,7 @@ export const likePost = async (req: Request, res: Response) => {
     res.status(500).json({ mensaje: "Error al dar/quitar like" });
   }
 };
+
 
 // Obtener posts con paginación
 export const obtenerPostsPaginados = async (req: Request, res: Response) => {
@@ -177,5 +175,24 @@ export const obtenerPostsPaginados = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al obtener los posts" });
+  }
+};
+export const obtenerPostPorId = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await Post.findById(postId)
+      .populate("autor", "nombre correo")
+      .populate({
+        path: "comentarios",
+        populate: { path: "autor", select: "nombre" }, // ← muy importante
+      });
+
+    if (!post) return res.status(404).json({ mensaje: "Post no encontrado" });
+
+    res.json(post);
+  } catch (error) {
+    console.error("Error al obtener el post por ID:", error);
+    res.status(500).json({ mensaje: "Error al obtener el post" });
   }
 };
