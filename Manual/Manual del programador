@@ -1,0 +1,146 @@
+Manual del Programador – "System Foro Tec"
+
+
+INDICE
+
+1. Introducción
+2. Requisitos del sistema
+3. Estructura del proyecto
+4. Instalación y ejecución local
+5. Principales funcionalidades
+6. Estándares y convenciones
+7. Autenticación y seguridad
+8. Conexión a la base de datos
+9. Buenas prácticas para contribuciones
+10. Contacto y soporte técnico
+
+1. Introducción
+Este manual está diseñado para programadores que deseen entender, mantener o extender el proyecto System Foro Tec, una plataforma para estudiantes, docentes y directivos que permite publicar noticias, participar en foros, brindar tutorías y compartir proyectos académicos, Aqui puden encontrar
+las diversas tecnologias y lenguajes que se usaron dentro dle proyecto, se muestar de una forma general el funcionamiento y estructura del proyecto como algunos comandos para facilitar la compresion del programador que desee revisar el repositorio y/o proyecto.
+
+2. Requisitos del sistema
+Backend:
+
+Node.js >= 18.x
+
+MongoDB local o MongoDB Atlas
+
+npm o yarn
+
+Frontend:
+
+Node.js >= 18.x
+
+Navegador moderno (Chrome, Firefox)
+
+3. Estructura del proyecto
+back/
+├── src/
+│   ├── config/              # Configuración (MongoDB base de datos)
+│   ├── controllers/         # Controladores para manejar lógica de rutas
+│   ├── middlewares/         # Middlewares (ej. autenticación)
+│   ├── models/              # Esquemas de Mongoose
+│   ├── routes/              # Definición de rutas
+│   ├── services/            # Servicios externos (ej. correos)
+│   └── index.ts             # Entrada principal del servidor
+├── .env                     # Variables de entorno
+├── package.json
+├── tsconfig.json
+
+
+
+
+front/
+├── src/
+│   ├── app/                 # Rutas con App Router (Next.js 13+)
+│   ├── components/          # Componentes reutilizables
+│   ├── context/             # Context API (ej. AuthContext)
+│   ├── styles/              # Hojas de estilo CSS
+├── static/templates/        # Archivos HTML base para correos
+├── public/                  # Archivos públicos (íconos, imágenes)
+├── package.json
+├── next.config.ts
+
+
+
+4. Instalación y ejecución local
+Paso 1: Clonar el repositorio:
+
+git clone https://github.com/AndresMate/ProyectoSOFTWARE.git
+cd system-foro-tec
+Paso 2: Instalar dependencias en backend y frontend:
+
+cd backend
+npm install
+cd ../frontend
+npm install
+
+Paso 3: Configurar variables de entorno:
+
+Crear archivo .env en /backend con:
+
+
+MONGO_URI=mongodb://localhost:27017/foro
+JWT_SECRET=*******
+EMAIL_USER=correo@ejemplo.com
+EMAIL_PASS=contraseña
+
+Paso 4: Ejecutar servidores:
+
+# Backend
+cd backend
+npm run dev
+
+# Frontend
+cd ../frontend
+npm run dev
+5. Principales funcionalidades
+
+Registro y login con verificación por correo
+Creación y edición de publicaciones
+Gestión de tutorías y foros por temas
+Panel de administración (en desarrollo)
+
+6. Estándares y convenciones
+
+Estilo de código: JavaScript moderno (ES6+)
+Linter: ESLint (opcional)
+Nombres de carpetas en minúscula
+Uso de async/await para operaciones asincrónicas
+
+7. Autenticación y seguridad
+
+Autenticación con JWT (jsonwebtoken)
+Hash de contraseñas con bcryptjs
+Verificación por correo con nodemailer
+Middleware para rutas protegidas
+
+8. Conexión a la base de datos
+
+Base de datos: MongoDB
+Librería: Mongoose
+Esquemas definidos por módulo (models/)
+Relación entre publicaciones y usuarios mediante referencias
+
+9. Buenas prácticas para contribuciones
+
+Crear ramas nuevas para cada funcionalidad:
+
+git checkout -b feature/nueva-funcionalidad
+
+Hacer pull request con descripción clara
+
+Revisar el código antes de hacer merge
+
+Probar localmente antes de subir cambios
+
+10. Contacto y soporte técnico
+Desarrolladores principales:
+
+Andrés Felipe Mateus Riaño – Backend
+Gustavo Alejandro Diaz Montoya - Fronted
+Dumar Hernán Malpica Lara -Documentacion
+
+
+
+
