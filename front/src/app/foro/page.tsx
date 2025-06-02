@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 interface Post {
   _id: string;
   titulo: string;
@@ -12,7 +11,7 @@ interface Post {
   autor: {
     nombre: string;
     correo: string;
-  };
+  } | null;
   fechaCreacion: string;
 }
 
@@ -21,26 +20,26 @@ const ForoPage = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-useEffect(() => {
-  const fetchPosts = async () => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/`);
-      const data = await res.json();
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/`);
+        const data = await res.json();
 
-      if (!res.ok) throw new Error(data.mensaje || "Error al obtener los posts");
+        if (!res.ok) throw new Error(data.mensaje || "Error al obtener los posts");
 
-      if (Array.isArray(data.posts)) {
-        setPosts(data.posts); // Accede a la propiedad 'posts'
-      } else {
-        throw new Error("La respuesta de la API no contiene un arreglo de posts");
+        if (Array.isArray(data.posts)) {
+          setPosts(data.posts);
+        } else {
+          throw new Error("La respuesta de la API no contiene un arreglo de posts");
+        }
+      } catch (err: any) {
+        setError(err.message);
       }
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
+    };
 
-  fetchPosts();
-}, []);
+    fetchPosts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
@@ -69,11 +68,16 @@ useEffect(() => {
               <h2 className="text-xl font-bold">{post.titulo}</h2>
               <p className="text-gray-300 line-clamp-2">{post.contenido}</p>
               <p className="text-sm text-gray-500 mt-2">
-                Por {post.autor.nombre} - {new Date(post.fechaCreacion).toLocaleString()}
+                Por{" "}
+                {post.autor ? (
+                  post.autor.nombre
+                ) : (
+                  <span className="text-red-400 italic">Usuario eliminado</span>
+                )}{" "}
+                - {new Date(post.fechaCreacion).toLocaleString()}
               </p>
             </Link>
           ))}
-
         </div>
       )}
     </div>

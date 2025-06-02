@@ -7,7 +7,7 @@ interface Post {
   _id: string;
   titulo: string;
   contenido: string;
-  autor: { nombre: string; correo: string };
+  autor: { nombre: string; correo: string } | null;
   comentarios: Comentario[];
   likes: string[];
   fechaCreacion: string;
@@ -16,7 +16,7 @@ interface Post {
 interface Comentario {
   _id: string;
   contenido: string;
-  autor: { nombre: string };
+  autor: { nombre: string } | null;
   fechaCreacion: string;
 }
 
@@ -102,7 +102,13 @@ const PostDetailPage = () => {
       <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-lg">
         <h1 className="text-3xl font-bold mb-2">{post.titulo}</h1>
         <p className="text-sm text-gray-400 mb-4">
-          Por {post.autor.nombre} - {new Date(post.fechaCreacion).toLocaleString()}
+          Por{" "}
+          {post.autor ? (
+            post.autor.nombre
+          ) : (
+            <span className="text-red-400 italic">Usuario eliminado</span>
+          )}{" "}
+          - {new Date(post.fechaCreacion).toLocaleString()}
         </p>
         <p className="mb-4 text-lg">{post.contenido}</p>
 
@@ -118,8 +124,12 @@ const PostDetailPage = () => {
           {post.comentarios.map((comentario) => (
             <li key={comentario._id} className="bg-gray-700 p-2 rounded">
               <p className="text-sm text-gray-300">
-                {comentario.autor?.nombre || "Usuario"} -{" "}
-                {new Date(comentario.fechaCreacion).toLocaleString()}
+                {comentario.autor ? (
+                  comentario.autor.nombre
+                ) : (
+                  <span className="text-red-400 italic">Usuario eliminado</span>
+                )}{" "}
+                - {new Date(comentario.fechaCreacion).toLocaleString()}
               </p>
               <p>{comentario.contenido}</p>
             </li>
