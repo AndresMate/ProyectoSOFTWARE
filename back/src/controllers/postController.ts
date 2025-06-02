@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Post from "../models/Post";
 import Comentario from "../models/Comentario";
+import mongoose from "mongoose";
+
 import Notification from "../models/Notification";
 
 
@@ -177,6 +179,8 @@ export const obtenerPostsPaginados = async (req: Request, res: Response) => {
     res.status(500).json({ mensaje: "Error al obtener los posts" });
   }
 };
+
+
 export const obtenerPostPorId = async (req: Request, res: Response) => {
   try {
     const { postId } = req.params;
@@ -185,14 +189,17 @@ export const obtenerPostPorId = async (req: Request, res: Response) => {
       .populate("autor", "nombre correo")
       .populate({
         path: "comentarios",
-        populate: { path: "autor", select: "nombre" }, // ← muy importante
+        populate: {
+          path: "autor",
+          select: "nombre",
+        },
       });
 
     if (!post) return res.status(404).json({ mensaje: "Post no encontrado" });
 
     res.json(post);
-  } catch (error) {
-    console.error("Error al obtener el post por ID:", error);
-    res.status(500).json({ mensaje: "Error al obtener el post" });
+  } catch (error: any) {
+    console.error("❌ Error exacto al obtener el post:", error.message);
+    res.status(500).json({ mensaje: "Error al obtener el post", detalle: error.message });
   }
 };
