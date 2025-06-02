@@ -80,7 +80,7 @@ export const eliminarPost = async (req: Request, res: Response) => {
     if (!post) return res.status(404).json({ mensaje: "Post no encontrado" });
 
     // Verificar que el usuario es el autor
-    if (post.autor.toString() !== req.user.id)
+    if (post.autor.toString() !== req.user.id && req.user.rol !== "admin")
       return res.status(403).json({ mensaje: "No tienes permisos para eliminar este post" });
 
     await post.deleteOne();
